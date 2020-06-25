@@ -1,0 +1,4 @@
+Bundle-Name: grow-journal-contributors-web
+Bundle-SymbolicName: com.liferay.grow.journal.contributors.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.grow.journal.contributors.web.constants

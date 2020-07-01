@@ -23,6 +23,14 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<liferay-theme:defineObjects />
+<%@ page import="com.liferay.grow.journal.contributors.web.JournalContributorsDisplayContext" %><%@
+        page import="com.liferay.grow.journal.contributors.web.dto.Contributor" %>
 
+<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<%
+    JournalContributorsDisplayContext journalContributorsDisplayContext = new JournalContributorsDisplayContext(request);
+    Contributor creatorContributor = journalContributorsDisplayContext.getCreator();
+    Contributor modifierContributor = journalContributorsDisplayContext.getModifier();
+%> >

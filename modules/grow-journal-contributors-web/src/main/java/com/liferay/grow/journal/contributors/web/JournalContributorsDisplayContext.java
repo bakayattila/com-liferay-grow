@@ -74,6 +74,22 @@ public class JournalContributorsDisplayContext {
         _initContributors();
     }
 
+	public Collection<Contributor> getContributors() {
+		long userId = 0;
+
+		if (_journalArticle != null) {
+			userId = _journalArticle.getUserId();
+		}
+
+		Map<Long, Contributor> nonCreatorContributors = new HashMap<>();
+
+		MapUtil.copy(_contributors, nonCreatorContributors);
+
+		nonCreatorContributors.remove(userId);
+
+		return nonCreatorContributors.values();
+	}
+
     public String getCreateDate() {
         DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
 
@@ -133,6 +149,12 @@ public class JournalContributorsDisplayContext {
                     1L,
                     new Contributor(
                             "Modifier Place Holder"));
+			_contributors.put(
+					2L, new Contributor("1st Place Holder"));
+			_contributors.put(
+					3L, new Contributor("2nd Place Holder"));
+			_contributors.put(
+					4L,	new Contributor("3rd Place Holder"));
 
         } else {
             List<JournalArticle> journalArticles =

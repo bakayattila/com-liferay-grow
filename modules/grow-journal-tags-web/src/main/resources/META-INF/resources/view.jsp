@@ -16,6 +16,37 @@
 
 <%@ include file="/init.jsp" %>
 
-<p>
-	<b><liferay-ui:message key="growjournaltagsweb.caption"/></b>
-</p>
+<nav class="a-items">
+	<input class="activate hidden" id="tags" name="tags" type="checkbox" />
+
+	<label class="accordion-label" for="tags">Tags</label>
+
+	<div class="a-content sbox">
+		<ul class="list-unstyled">
+			<c:if test="<%= journalTagsDisplayContext.hasTags() %>">
+				<c:if test="<%= journalTagsDisplayContext.hasOfficial() %>">
+					<li>
+						<span class="glyphicon glyphicon-check"></span>
+
+						<a href="/search?assetTagNames=official">official</a>
+					</li>
+				</c:if>
+
+				<li>
+					<span class="glyphicon glyphicon-tags"></span>
+
+					<%
+					for (AssetTag tag : journalTagsDisplayContext.getUnofficialTags()) {
+					%>
+
+						<a href="/search?assetTagNames=<%= tag.getName() %>"><%= tag.getName() %></a>
+
+					<%
+					}
+					%>
+
+				</li>
+			</c:if>
+		</ul>
+	</div>
+</nav>

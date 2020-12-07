@@ -23,6 +23,7 @@ map.put("modifier", modifierContributor.getName());
 map.put("modifierDate", journalContributorsDisplayContext.getModifiedDate());
 map.put("creator", creatorContributor.getName());
 map.put("creatorDate", journalContributorsDisplayContext.getCreateDate());
+map.put("contributorsList", journalContributorsDisplayContext.getContributors());
 
 %>
 

@@ -126,6 +126,14 @@ public class JournalContributorsDisplayContext {
         return _contributors.get(_journalArticle.getStatusByUserId());
     }
 
+    public long getViewCount() {
+        if (_assetEntry == null) {
+            return 0;
+        }
+
+        return _assetEntry.getViewCount();
+    }
+
     private Contributor _createContributor(long userId) {
         User user = UserLocalServiceUtil.fetchUser(userId);
         String fullName = "Missing User";

@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -74,11 +75,16 @@ public class JournalContributorsDisplayContext {
         _initContributors();
     }
 
-	public Collection<Contributor> getContributors() {
+	public Collection<Contributor> getContributors() throws PortalException {
 		long userId = 0;
 
 		if (_journalArticle != null) {
-			userId = _journalArticle.getUserId();
+
+            JournalArticle originalVersion =
+                    JournalArticleLocalServiceUtil.getOldestArticle(
+                            _journalArticle.getGroupId(),_journalArticle.getArticleId());
+
+			userId = originalVersion.getUserId();
 		}
 
 		Map<Long, Contributor> nonCreatorContributors = new HashMap<>();
@@ -90,22 +96,30 @@ public class JournalContributorsDisplayContext {
 		return nonCreatorContributors.values();
 	}
 
-    public String getCreateDate() {
+    public String getCreateDate() throws PortalException {
         DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
 
         if (_journalArticle == null) {
             return dateFormat.format(new Date());
         }
 
-        return dateFormat.format(_journalArticle.getCreateDate());
+        JournalArticle originalVersion =
+                JournalArticleLocalServiceUtil.getOldestArticle(
+                _journalArticle.getGroupId(),_journalArticle.getArticleId());
+
+        return dateFormat.format(originalVersion.getCreateDate());
     }
 
-    public Contributor getCreator() {
+    public Contributor getCreator() throws PortalException {
         if (_journalArticle == null) {
             return _contributors.get(0L);
         }
 
-        return _contributors.get(_journalArticle.getUserId());
+        JournalArticle originalVersion =
+                JournalArticleLocalServiceUtil.getOldestArticle(
+                        _journalArticle.getGroupId(),_journalArticle.getArticleId());
+
+        return _contributors.get(originalVersion.getUserId());
     }
 
     public String getModifiedDate() {

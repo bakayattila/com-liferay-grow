@@ -134,7 +134,7 @@ public class JournalContributorsDisplayContext {
             fullName = user.getFullName();
         }
 
-        return new Contributor(fullName);
+        return new Contributor(fullName, 0);
     }
 
     private void _initContributors() {
@@ -144,17 +144,17 @@ public class JournalContributorsDisplayContext {
             _contributors.put(
                     0L,
                     new Contributor(
-                            "Creator Place Holder"));
+                            "Creator Place Holder", 32));
             _contributors.put(
                     1L,
                     new Contributor(
-                            "Modifier Place Holder"));
+                            "Modifier Place Holder", 21));
 			_contributors.put(
-					2L, new Contributor("1st Place Holder"));
+					2L, new Contributor("1st Place Holder", 1));
 			_contributors.put(
-					3L, new Contributor("2nd Place Holder"));
+					3L, new Contributor("2nd Place Holder", 5));
 			_contributors.put(
-					4L,	new Contributor("3rd Place Holder"));
+					4L,	new Contributor("3rd Place Holder", 777));
 
         } else {
             List<JournalArticle> journalArticles =

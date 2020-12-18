@@ -126,6 +126,29 @@ public class JournalContributorsDisplayContext {
         return _contributors.get(_journalArticle.getStatusByUserId());
     }
 
+    public String getURLViewHistory() {
+        if (_journalArticle == null) {
+            return StringPool.BLANK;
+        }
+
+        Group group = GroupLocalServiceUtil.fetchGroup(
+                _journalArticle.getGroupId());
+
+        PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+                _httpServletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
+                PortletRequest.RENDER_PHASE);
+
+        ThemeDisplay themeDisplay =
+                (ThemeDisplay)_httpServletRequest.getAttribute(
+                        WebKeys.THEME_DISPLAY);
+
+        portletURL.setParameter("mvcPath", "/view_article_history.jsp");
+        portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+        portletURL.setParameter("articleId", _journalArticle.getArticleId());
+
+        return portletURL.toString();
+    }
+
     private Contributor _createContributor(long userId) {
         User user = UserLocalServiceUtil.fetchUser(userId);
         String fullName = "Missing User";
